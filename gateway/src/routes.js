@@ -10,22 +10,20 @@
 
 export const routes = [
   {
-    // Any request starting with /api/users -> forwarded to the user service
     pathPrefix: '/api/users',
-    target: 'http://localhost:4001',
-    // Strip the /api/users prefix before forwarding, so the backend
-    // service just sees /  or /:id, not /api/users/:id. This keeps
-    // backend services simpler and decoupled from gateway-level routing.
+    target: process.env.USER_SERVICE_URL || 'http://user-service:4001',
     pathRewrite: { '^/api/users': '' },
   },
+
   {
     pathPrefix: '/api/orders',
-    target: 'http://localhost:4002',
+    target: process.env.ORDER_SERVICE_URL || 'http://order-service:4002',
     pathRewrite: { '^/api/orders': '' },
   },
+
   {
     pathPrefix: '/api/products',
-    target: 'http://localhost:4003',
+    target: process.env.PRODUCT_SERVICE_URL || 'http://product-service:4003',
     pathRewrite: { '^/api/products': '' },
   },
 ];
