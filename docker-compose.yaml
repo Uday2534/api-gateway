@@ -1,0 +1,59 @@
+services:
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  user-service:
+    build: ./services/user-service
+    container_name: user-service
+    ports:
+      - "4001:4001"
+
+  order-service:
+    build: ./services/order-service
+    container_name: order-service
+    ports:
+      - "4002:4002"
+
+  product-service:
+    build: ./services/product-service
+    container_name: product-service
+    ports:
+      - "4003:4003"
+
+  gateway-1:
+    build: ./gateway
+    container_name: gateway-1
+    environment:
+      PORT: 3000
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: super-secret
+      RATE_LIMIT_CAPACITY: 5
+      RATE_LIMIT_REFILL_RATE: 0.1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+      - user-service
+      - order-service
+      - product-service
+
+  gateway-2:
+    build: ./gateway
+    container_name: gateway-2
+    environment:
+      PORT: 3000
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: super-secret
+      RATE_LIMIT_CAPACITY: 5
+      RATE_LIMIT_REFILL_RATE: 0.1
+    ports:
+      - "3001:3000"
+    depends_on:
+      - redis
+      - user-service
+      - order-service
+      - product-service
