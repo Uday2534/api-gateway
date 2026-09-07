@@ -11,19 +11,29 @@
 export const routes = [
   {
     pathPrefix: '/api/users',
-    target: process.env.USER_SERVICE_URL || 'http://user-service:4001',
-    pathRewrite: { '^/api/users': '' },
+    target:
+      process.env.USER_SERVICE_URL ||
+      'http://localhost:4001',
+    pathRewrite: {
+      '^/api/users': '',
+    },
   },
-
   {
     pathPrefix: '/api/orders',
-    target: process.env.ORDER_SERVICE_URL || 'http://order-service:4002',
-    pathRewrite: { '^/api/orders': '' },
+    target:
+      process.env.ORDER_SERVICE_URL ||
+      'http://localhost:4002',
+    pathRewrite: {
+      '^/api/orders': '',
+    },
   },
-
   {
     pathPrefix: '/api/products',
-    target: process.env.PRODUCT_SERVICE_URL || 'http://product-service:4003',
-    pathRewrite: { '^/api/products': '' },
+    target:
+      process.env.PRODUCT_SERVICE_URL ||
+      'http://localhost:4003',
+    pathRewrite: {
+      '^/api/products': '',
+    },
   },
 ];

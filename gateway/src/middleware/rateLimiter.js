@@ -6,6 +6,10 @@ import { fileURLToPath } from 'url';
 import { redisClient } from '../redis/client.js';
 import { config } from '../config/env.js';
 import { stats } from '../metrics/stats.js';
+import {
+  rateLimitCounter,
+} from '../metrics/prometheus.js';
+
 const __filename =
   fileURLToPath(import.meta.url);
 
@@ -60,10 +64,6 @@ export async function rateLimiter(
           ],
         }
       );
-      
-    console.log('RATE LIMIT RESULT:', result);
-    console.log('TYPE:', typeof result);
-    console.log('IS ARRAY:', Array.isArray(result));
 
     const allowed = result[0];
     const retryAfter = result[1];
@@ -76,7 +76,7 @@ export async function rateLimiter(
             'Retry-After',
             String(retryAfter)
         );
-
+        rateLimitCounter.inc();
         return res.status(429).json({
             error: 'Rate limit exceeded',
         });

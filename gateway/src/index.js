@@ -8,7 +8,8 @@ import authRoutes from './routes/authRoutes.js';
 import { authenticateToken } from './middleware/auth.js';
 import { requestLogger }
 from './middleware/requestLogger.js';
-
+import metricsRoutes
+from './routes/metricsRoutes.js';
 import statsRoutes from './routes/statsRoutes.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,6 +27,7 @@ app.use(requestLogger);
 */
 app.use('/', authRoutes);
 app.use('/gateway/stats', statsRoutes);
+app.use('/metrics', metricsRoutes);
 /*
  Protect all API traffic before it reaches backend services.
 

@@ -1,6 +1,9 @@
 import { logger } from '../logger/logger.js';
 import { stats } from '../metrics/stats.js';
-
+import {
+  requestCounter,
+  requestLatency,
+} from '../metrics/prometheus.js';
 /*
  WHY LOG ON RESPONSE FINISH?
 
@@ -28,6 +31,16 @@ export function requestLogger(req, res, next) {
     } else {
       stats.successfulRequests++;
     }
+    
+    requestCounter.inc({
+        method: req.method,
+        route: req.path,
+        status: res.statusCode,
+    });
+    requestLatency.observe({
+        method: req.method,
+        route: req.path,
+    }, latencyMs);
 
     logger.info({
       method: req.method,
