@@ -159,8 +159,8 @@ This project uses a Distributed Token Bucket Algorithm.
 ### Configuration
 
 ```env
-RATE_LIMIT_CAPACITY=5
-RATE_LIMIT_REFILL_RATE=0.1
+RATE_LIMIT_CAPACITY=100
+RATE_LIMIT_REFILL_RATE=10
 ```
 
 ### How It Works
