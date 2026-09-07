@@ -35,8 +35,8 @@ services:
       ORDER_SERVICE_URL: http://order-service:4002
       PRODUCT_SERVICE_URL: http://product-service:4003
 
-      RATE_LIMIT_CAPACITY: 5
-      RATE_LIMIT_REFILL_RATE: 0.1
+      RATE_LIMIT_CAPACITY: 100
+      RATE_LIMIT_REFILL_RATE: 10
 
     expose:
     - "3000"
